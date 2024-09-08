@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Greeting Cards</title>
+    <style>
+      /* General styling for greeting cards */
+      .greeting-card {
+        border: 2px solid #007bff;
+        padding: 15px;
+        margin: 15px;
+        border-radius: 10px;
+        background-color: #e9f7ff;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 250px;
+      }
+
+      h1 {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .form {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      input {
+        margin-right: 10px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        padding: 8px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const { useState } = React;
+
+      // GreetingCard component - Displays a greeting card
+      function GreetingCard({ greeting, name }) {
+        return (
+          <div className="greeting-card">
+            <h3>{greeting}</h3>
+            <p>- {name}</p>
+          </div>
+        );
+      }
+
+      // Main App component - Manages state and renders the greeting cards
+      function App() {
+        // State to hold the list of greeting cards
+        const [cards, setCards] = useState([
+          { greeting: "Happy Birthday", name: "John Doe" },
+          { greeting: "Congratulations", name: "Jane Smith" },
+          { greeting: "Best Wishes", name: "Alice Johnson" }
+        ]);
+
+        // State to manage form inputs
+        const [greeting, setGreeting] = useState("");
+        const [name, setName] = useState("");
+
+        // Function to handle adding a new card
+        const addCard = (e) => {
+          e.preventDefault();
+          if (greeting && name) {
+            setCards([...cards, { greeting, name }]);
+            setGreeting("");
+            setName("");
+          }
+        };
+
+        return (
+          <div>
+            <h1>Dynamic Greeting Cards</h1>
+            {/* Form to add a new greeting card */}
+            <div className="form">
+              <input
+                type="text"
+                placeholder="Enter Greeting"
+                value={greeting}
+                onChange={(e) => setGreeting(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Enter Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <button onClick={addCard}>Add Card</button>
+            </div>
+
+            {/* Displaying the list of greeting cards */}
+            <div className="container">
+              {cards.map((card, index) => (
+                <GreetingCard key={index} greeting={card.greeting} name={card.name} />
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      // Render the App component
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

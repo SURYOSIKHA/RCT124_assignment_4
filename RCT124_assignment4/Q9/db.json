@@ -1,0 +1,10 @@
+{
+  "todos": [
+    {
+      "id": "2",
+      "title": "Submit the assignment",
+      "isCompleted": true,
+      "assignee": "Jane"
+    }
+  ]
+}
